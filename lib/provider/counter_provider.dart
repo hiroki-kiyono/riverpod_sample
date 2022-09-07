@@ -5,7 +5,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 /// Providers are declared as global variables.
 /// This does not hinder testability, as the state of a provider is instead
 /// stored inside a [ProviderScope].
-final counterProvider = StateNotifierProvider<Counter, int>((_) => Counter());
+final counterProvider = StateNotifierProvider<CounterNotifier, int>((_) => CounterNotifier());
 
 /// A simple [StateNotifier] that implements a counter.
 ///
@@ -13,7 +13,7 @@ final counterProvider = StateNotifierProvider<Counter, int>((_) => Counter());
 /// - [ChangeNotifier], with [ChangeNotifierProvider]
 /// - [Stream], with [StreamProvider]
 /// ...
-class Counter extends StateNotifier<int> {
-  Counter() : super(0);
+class CounterNotifier extends StateNotifier<int> {
+  CounterNotifier() : super(0);
   void increment() => state++;
 }
