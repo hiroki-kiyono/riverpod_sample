@@ -7,7 +7,7 @@ class Home extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final count = ref.watch(counterProvider);
+    final count = ref.watch(counterProvider).counter;
 
     return Scaffold(
       appBar: AppBar(
