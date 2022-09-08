@@ -15,6 +15,11 @@ For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
 
+
+## 技術スタック
+- 状態管理：hooks_riverpod
+- 画面遷移：go_router
+- データクラス作成：freezed
 ## 始めてビルドを通す場合
 1. 下記コマンドでfreezed等の自動生成ファイルを作成する  
    `flutter pub run build_runner build --delete-conflicting-outputs`  

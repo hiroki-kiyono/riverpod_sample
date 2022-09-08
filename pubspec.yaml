@@ -57,6 +57,8 @@ dev_dependencies:
   build_runner: ^2.2.0
   # Immutableなデータクラス生成用
   freezed: ^2.1.0+1
+  # go_routerクラス生成用
+  go_router_builder: ^1.0.10
   # assetsの呼び出し簡略コード生成用
   flutter_gen_runner: ^4.3.0
 

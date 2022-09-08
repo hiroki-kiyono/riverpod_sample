@@ -1,36 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'ui/home.dart';
+import 'package:riverpod_sample/routing/app_router.dart';
 
-void main() {
-  runApp(
+void main() => runApp(ProviderScope(child: Application()));
 
-      /// [MyApp] is wrapped in a [ProviderScope].
-      /// This widget is where the state of most of our providers will be stored.
-      /// This replaces `MultiProvider` if you've used `provider` before.
-      const ProviderScope(child: MyApp()));
-}
+class Application extends StatelessWidget {
+  Application({Key? key}) : super(key: key);
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  static const title = 'Flutter Demo';
 
-  // This widget is the root of your application.
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          // This is the theme of your application.
-          //
-          // Try running your application with "flutter run". You'll see the
-          // application has a blue toolbar. Then, without quitting the app, try
-          // changing the primarySwatch below to Colors.green and then invoke
-          // "hot reload" (press "r" in the console where you ran "flutter run",
-          // or simply save your changes to "hot reload" in a Flutter IDE).
-          // Notice that the counter didn't reset back to zero; the application
-          // is not restarted.
-          primarySwatch: Colors.blue,
-        ),
-        home: const Home());
-  }
+  Widget build(BuildContext context) => MaterialApp.router(
+        routeInformationProvider: _router.routeInformationProvider,
+        routeInformationParser: _router.routeInformationParser,
+        routerDelegate: _router.routerDelegate,
+        title: title,
+      );
+
+  /// go_router_builderで作成したGoRouteクラスを設定.
+  final _router = GoRouter(
+    routes: $appRoutes,
+  );
 }
