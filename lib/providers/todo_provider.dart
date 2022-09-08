@@ -2,6 +2,8 @@ import 'package:riverpod_sample/models/todo/todo.dart';
 import 'package:riverpod_sample/models/todo/todo_state.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+final todoProvider =
+    StateNotifierProvider<TodoNotifier, TodoListState>((_) => TodoNotifier());
 class TodoNotifier extends StateNotifier<TodoListState> {
   TodoNotifier() : super(const TodoListState.loading());
 
