@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_sample/models/todo/todo.dart';
 import 'package:riverpod_sample/models/todo/todo_state.dart';
 import 'package:riverpod_sample/repository/local/todo_repository.dart';
@@ -11,8 +11,10 @@ enum SortOrder {
 
 /// ソート順状態(非公開)
 final _sortOrderState = StateProvider<SortOrder>((ref) => SortOrder.asc);
+
 /// todoリスト(非公開)
 final _todoListState = StateProvider<List<Todo>?>((ref) => null);
+
 /// ソート済みtodoリスト
 final sortedTodoListState = StateProvider<List<Todo>?>((ref) {
   final List<Todo>? todoList = ref.watch(_todoListState);
@@ -26,6 +28,8 @@ final sortedTodoListState = StateProvider<List<Todo>?>((ref) {
 });
 
 final todoNotifier = StateNotifierProvider<TodoNotifier, TodoListState>((ref) => TodoNotifier(ref.read));
+/// disposeさせたい場合とで使い分ける
+final todoAutoDisposeNotifier = StateNotifierProvider.autoDispose<TodoNotifier, TodoListState>((ref) => TodoNotifier(ref.read));
 
 class TodoNotifier extends StateNotifier<TodoListState> {
   final Reader _read;
@@ -55,11 +59,7 @@ class TodoNotifier extends StateNotifier<TodoListState> {
     }
     textController.text = '';
     final now = DateTime.now();
-    final newTodo = Todo(
-      id: now.millisecondsSinceEpoch.toString(),
-      title: text,
-      timestamp: now
-    );
+    final newTodo = Todo(id: now.millisecondsSinceEpoch.toString(), title: text, timestamp: now);
     final List<Todo> newTodoList = [newTodo, ...(_read(_todoListState) ?? [])];
     _read(_todoListState.notifier).state = newTodoList;
     await _read(todoRepository).saveTodoList(newTodoList);
@@ -68,8 +68,7 @@ class TodoNotifier extends StateNotifier<TodoListState> {
   /// todo実行,非実行の切り替え
   Future<void> toggleDoneStatus(Todo todo) async {
     final List<Todo> newTodoList = [
-      ...(_read(_todoListState) ?? [])
-          .map((e) => (e.id == todo.id) ? e.copyWith(done: !e.done) : e)
+      ...(_read(_todoListState) ?? []).map((e) => (e.id == todo.id) ? e.copyWith(done: !e.done) : e)
     ];
     _read(_todoListState.notifier).state = newTodoList;
     await _read(todoRepository).saveTodoList(newTodoList);
@@ -77,9 +76,6 @@ class TodoNotifier extends StateNotifier<TodoListState> {
 
   /// todoリストのソート
   void toggleSortOrder() {
-    _read(_sortOrderState.notifier).state =
-        _read(_sortOrderState) == SortOrder.asc
-            ? SortOrder.desc
-            : SortOrder.asc;
+    _read(_sortOrderState.notifier).state = _read(_sortOrderState) == SortOrder.asc ? SortOrder.desc : SortOrder.asc;
   }
 }

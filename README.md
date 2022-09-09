@@ -17,7 +17,7 @@ samples, guidance on mobile development, and a full API reference.
 
 
 ## 技術スタック
-- 状態管理：hooks_riverpod
+- 状態管理：flutter_riverpod
 - 画面遷移：go_router
 - データクラス作成：freezed
 ## 始めてビルドを通す場合

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_sample/models/todo/todo.dart';
 import 'package:riverpod_sample/providers/todo_provider.dart';
 
-class TodoTile extends HookConsumerWidget {
+class TodoTile extends ConsumerWidget {
   final Todo todo;
   const TodoTile({super.key, required this.todo});
 
@@ -18,7 +18,7 @@ class TodoTile extends HookConsumerWidget {
               const Icon(Icons.check_box, color: Colors.green) :
               const Icon(Icons.check_box_outline_blank),
           // チェックをつける.
-          onPressed: () => ref.read(todoNotifier.notifier).toggleDoneStatus(todo),
+          onPressed: () => ref.read(todoAutoDisposeNotifier.notifier).toggleDoneStatus(todo),
         ),
         trailing: Text(todo.timestamp.toIso8601String()),
       ),
