@@ -24,3 +24,7 @@ samples, guidance on mobile development, and a full API reference.
 1. 下記コマンドでfreezed等の自動生成ファイルを作成する  
    `flutter pub run build_runner build --delete-conflicting-outputs`  
    オプションは生成済みのファイルがコンフリクトした場合の削除命令
+
+### 参考
+- https://github.dev/ttlg/riverpod_todo
+- https://github.com/salvadordeveloper/flutter-crypto-app

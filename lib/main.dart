@@ -8,7 +8,11 @@ void main() => runApp(ProviderScope(child: Application()));
 class Application extends StatelessWidget {
   Application({Key? key}) : super(key: key);
 
+  /// タイトル.
   static const title = 'Flutter Demo';
+
+  /// go_router_builderで作成したGoRouteクラスを設定.
+  final _router = GoRouter(routes: $appRoutes);
 
   @override
   Widget build(BuildContext context) => MaterialApp.router(
@@ -17,9 +21,4 @@ class Application extends StatelessWidget {
         routerDelegate: _router.routerDelegate,
         title: title,
       );
-
-  /// go_router_builderで作成したGoRouteクラスを設定.
-  final _router = GoRouter(
-    routes: $appRoutes,
-  );
 }

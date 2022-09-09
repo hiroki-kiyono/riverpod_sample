@@ -36,12 +36,18 @@ dependencies:
   cupertino_icons: ^1.0.2
   # 状態管理
   hooks_riverpod: ^1.0.4
+  # ライフサイクル管理
+  flutter_hooks: ^0.18.5+1
   # 通信
   dio: ^4.0.6
   # 画面遷移
   go_router: ^4.3.0
   # freezedのannotationを使う為
   freezed_annotation: ^2.1.0
+  # freezedの生成クラスをjson形式にする
+  json_serializable: ^6.3.1
+  # ローカルデータ保存
+  shared_preferences: ^2.0.15
 
 dev_dependencies:
   flutter_test:

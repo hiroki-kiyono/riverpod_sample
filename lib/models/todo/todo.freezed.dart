@@ -14,12 +14,19 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
+Todo _$TodoFromJson(Map<String, dynamic> json) {
+  return _Todo.fromJson(json);
+}
+
 /// @nodoc
 mixin _$Todo {
 // 必須
-  int get id => throw _privateConstructorUsedError; // null許容
-  String? get title => throw _privateConstructorUsedError;
+  String get id => throw _privateConstructorUsedError; // デフォルトで空指定
+  String get title => throw _privateConstructorUsedError;
+  DateTime get timestamp => throw _privateConstructorUsedError;
+  bool get done => throw _privateConstructorUsedError;
 
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $TodoCopyWith<Todo> get copyWith => throw _privateConstructorUsedError;
 }
@@ -28,7 +35,7 @@ mixin _$Todo {
 abstract class $TodoCopyWith<$Res> {
   factory $TodoCopyWith(Todo value, $Res Function(Todo) then) =
       _$TodoCopyWithImpl<$Res>;
-  $Res call({int id, String? title});
+  $Res call({String id, String title, DateTime timestamp, bool done});
 }
 
 /// @nodoc
@@ -43,16 +50,26 @@ class _$TodoCopyWithImpl<$Res> implements $TodoCopyWith<$Res> {
   $Res call({
     Object? id = freezed,
     Object? title = freezed,
+    Object? timestamp = freezed,
+    Object? done = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       title: title == freezed
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
+      timestamp: timestamp == freezed
+          ? _value.timestamp
+          : timestamp // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      done: done == freezed
+          ? _value.done
+          : done // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -62,7 +79,7 @@ abstract class _$$_TodoCopyWith<$Res> implements $TodoCopyWith<$Res> {
   factory _$$_TodoCopyWith(_$_Todo value, $Res Function(_$_Todo) then) =
       __$$_TodoCopyWithImpl<$Res>;
   @override
-  $Res call({int id, String? title});
+  $Res call({String id, String title, DateTime timestamp, bool done});
 }
 
 /// @nodoc
@@ -78,35 +95,57 @@ class __$$_TodoCopyWithImpl<$Res> extends _$TodoCopyWithImpl<$Res>
   $Res call({
     Object? id = freezed,
     Object? title = freezed,
+    Object? timestamp = freezed,
+    Object? done = freezed,
   }) {
     return _then(_$_Todo(
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       title: title == freezed
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
+      timestamp: timestamp == freezed
+          ? _value.timestamp
+          : timestamp // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      done: done == freezed
+          ? _value.done
+          : done // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
 
 /// @nodoc
-
+@JsonSerializable()
 class _$_Todo implements _Todo {
-  const _$_Todo({required this.id, this.title});
+  const _$_Todo(
+      {required this.id,
+      this.title = "",
+      required this.timestamp,
+      this.done = false});
+
+  factory _$_Todo.fromJson(Map<String, dynamic> json) => _$$_TodoFromJson(json);
 
 // 必須
   @override
-  final int id;
-// null許容
+  final String id;
+// デフォルトで空指定
   @override
-  final String? title;
+  @JsonKey()
+  final String title;
+  @override
+  final DateTime timestamp;
+  @override
+  @JsonKey()
+  final bool done;
 
   @override
   String toString() {
-    return 'Todo(id: $id, title: $title)';
+    return 'Todo(id: $id, title: $title, timestamp: $timestamp, done: $done)';
   }
 
   @override
@@ -115,28 +154,50 @@ class _$_Todo implements _Todo {
         (other.runtimeType == runtimeType &&
             other is _$_Todo &&
             const DeepCollectionEquality().equals(other.id, id) &&
-            const DeepCollectionEquality().equals(other.title, title));
+            const DeepCollectionEquality().equals(other.title, title) &&
+            const DeepCollectionEquality().equals(other.timestamp, timestamp) &&
+            const DeepCollectionEquality().equals(other.done, done));
   }
 
+  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(id),
-      const DeepCollectionEquality().hash(title));
+      const DeepCollectionEquality().hash(title),
+      const DeepCollectionEquality().hash(timestamp),
+      const DeepCollectionEquality().hash(done));
 
   @JsonKey(ignore: true)
   @override
   _$$_TodoCopyWith<_$_Todo> get copyWith =>
       __$$_TodoCopyWithImpl<_$_Todo>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_TodoToJson(
+      this,
+    );
+  }
 }
 
 abstract class _Todo implements Todo {
-  const factory _Todo({required final int id, final String? title}) = _$_Todo;
+  const factory _Todo(
+      {required final String id,
+      final String title,
+      required final DateTime timestamp,
+      final bool done}) = _$_Todo;
+
+  factory _Todo.fromJson(Map<String, dynamic> json) = _$_Todo.fromJson;
 
   @override // 必須
-  int get id;
-  @override // null許容
-  String? get title;
+  String get id;
+  @override // デフォルトで空指定
+  String get title;
+  @override
+  DateTime get timestamp;
+  @override
+  bool get done;
   @override
   @JsonKey(ignore: true)
   _$$_TodoCopyWith<_$_Todo> get copyWith => throw _privateConstructorUsedError;
