@@ -18,7 +18,7 @@ class TodoTile extends HookConsumerWidget {
               const Icon(Icons.check_box, color: Colors.green) :
               const Icon(Icons.check_box_outline_blank),
           // チェックをつける.
-          onPressed: () => ref.read(todoViewController).toggleDoneStatus(todo),
+          onPressed: () => ref.read(todoNotifier.notifier).toggleDoneStatus(todo),
         ),
         trailing: Text(todo.timestamp.toIso8601String()),
       ),

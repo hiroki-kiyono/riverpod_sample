@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:riverpod_sample/models/todo/todo.dart';
+import 'package:riverpod_sample/models/todo/todo_state.dart';
 import 'package:riverpod_sample/repository/local/todo_repository.dart';
 
 enum SortOrder {
@@ -24,21 +25,25 @@ final sortedTodoListState = StateProvider<List<Todo>?>((ref) {
   return todoList;
 });
 
-final todoViewController =
-    Provider.autoDispose((ref) => TodoViewController(ref.read));
+final todoNotifier = StateNotifierProvider<TodoNotifier, TodoListState>((ref) => TodoNotifier(ref.read));
 
-class TodoViewController {
+class TodoNotifier extends StateNotifier<TodoListState> {
   final Reader _read;
-  TodoViewController(this._read);
+  TodoNotifier(this._read) : super(const TodoListState.loading()) {
+    initState();
+  }
 
   /// 初期処理
   Future<void> initState() async {
-    _read(_todoListState.notifier).state =
-        await _read(todoRepository).getTodoList();
+    final list = await _read(todoRepository).getTodoList();
+    _read(_todoListState.notifier).state = list;
+    state = TodoListState(todoList: list);
   }
 
   /// 終了処理
+  @override
   void dispose() {
+    super.dispose();
     _read(_todoListState)?.clear();
   }
 
